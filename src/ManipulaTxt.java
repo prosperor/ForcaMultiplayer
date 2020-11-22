@@ -5,8 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class ManipulaTxt {
-    String palavra;
-    int iLinhas = -1;
+    private String palavra;
+    private int iLinhas = -1;
 
     public ManipulaTxt(){
         try {
