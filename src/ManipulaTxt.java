@@ -17,8 +17,8 @@ public class ManipulaTxt {
                 palavra = lerArq.readLine();
                 iLinhas++;
             }
-
             dicio.close();
+            setPalavra();
         }catch (IOException e){
             System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
         }
