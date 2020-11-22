@@ -27,7 +27,7 @@ public class ManipulaTxt {
 
     public void setPalavra(){
         try {
-            palavra = Files.readAllLines(Paths.get("src/dicio.txt")).get((int)(Math.random() *  iLinhas));
+            palavra = (Files.readAllLines(Paths.get("src/dicio.txt")).get((int)(Math.random() *  iLinhas))).toLowerCase();
         }catch (IOException e){
             System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
         }
