@@ -33,6 +33,15 @@ public class Servidor {
         return false;
     }
 
+    public boolean cadastrado(String nome){
+        for (int x=0; x < jogadores.size(); x++){
+            if (jogadores.get(x).getNome() == nome){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void reiniciar(){
         jogo.startNewGame();
     }

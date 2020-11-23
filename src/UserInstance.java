@@ -7,14 +7,20 @@ public class UserInstance {
     Servidor sv = new Servidor();
 
     public UserInstance(){
-        System.out.println("Defina seu nome: ");
+        System.out.println("Insira seu nome: ");
 
         nome = sc1.nextLine();
         palavra = sv.getPalavra();
-        sv.cadastrarUser(nome);
+        if(!sv.cadastrado(nome)){
+            id = sv.cadastrarUser(nome);
+            System.out.println("Usuario cadastrado como: " + nome + '\n');
+            System.out.println("palavra: " + palavra);
+        }else{
+            //esperando Servidor.java
+        }
+        
 
-        System.out.println("Usuario cadastrado como: " + nome + '\n');
-        System.out.println("palavra: " + palavra);
+       
 
         while(true){
             chutar();
@@ -24,7 +30,7 @@ public class UserInstance {
     public void chutar(){
         while(true){
             enviarChute(escreverChute());
-            System.out.println(nome + ": " + palavra + '\n');
+            System.out.println("palavra: " + palavra + '\n');
         }
     }
 
