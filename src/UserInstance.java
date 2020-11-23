@@ -1,27 +1,46 @@
 import java.util.Scanner;
 
 public class UserInstance {
-    int id;
+    int id, x, id1;
     String nome, palavra;
     Scanner sc1 = new Scanner(System.in);
     Servidor sv = new Servidor();
 
     public UserInstance(){
-        System.out.println("Insira seu nome: ");
 
-        nome = sc1.nextLine();
-        palavra = sv.getPalavra();
-        if(!sv.cadastrado(nome)){
-            id = sv.cadastrarUser(nome);
-            System.out.println("Usuario cadastrado como: " + nome + '\n');
-            System.out.println("palavra: " + palavra);
-        }else{
-            //esperando Servidor.java
+        while(x != 0){
+            System.out.println("1 - entrar como novo jogador" + '\n' + "2 - entrar como usuario ja existente");
+            switch(x){
+                case 1:
+                    System.out.println("Insira seu nome: ");
+    
+                    nome = sc1.nextLine();
+                    palavra = sv.getPalavra();
+                    if(!sv.cadastrado(nome)){
+                        id = sv.cadastrarUser(nome);
+                        System.out.println("Usuario cadastrado como: " + nome + '\n');
+                        x = 0;
+                    }else{
+                        System.out.println("Usuario ja cadastrado");
+                    }
+                    break;
+    
+                case 2:
+                    System.out.println("Insira seu ID: ");
+                    id1 = sc1.nextInt();
+                    if(sv.cadastrado(id1)){
+                        //necessario uma forma de obter o id para autenticar e reconectar ao jogo
+                        x = 0;
+                    }else{
+                        System.out.println("ID não corresponde");
+                    }
+                    break;
+            }
         }
         
-
+        
+        System.out.println("palavra: " + palavra + '\n');
        
-
         while(true){
             chutar();
         }
