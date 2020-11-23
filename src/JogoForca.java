@@ -10,6 +10,7 @@ public class JogoForca {
     }
 
     public String chute(Character letra){
+        letra = letra.toString().toUpperCase().charAt(0);
         StringBuilder saida = new StringBuilder(wordChute);
         if (Character.isAlphabetic(letra)){
             if (word.contains(letra.toString())){

@@ -34,7 +34,7 @@ public class ManipulaTxt {
     }
 
     public String getPalavra(){
-        return palavra;
+        return palavra.toUpperCase();
     }
 
     public String getPalavra(boolean bin){
