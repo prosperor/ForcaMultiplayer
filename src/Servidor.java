@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,9 +7,12 @@ public class Servidor {
     private List<Usuario> jogadores;
     private JogoForca jogo;
 
-    public Servidor(){
+
+    public Servidor() {
         jogadores = new ArrayList<>();
         jogo = new JogoForca();
+
+
     }
 
     public String chutar(Character letra){
