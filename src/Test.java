@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
+        /*
+
         JogoForca jogo = new JogoForca();
         Scanner tec = new Scanner(System.in);
 
@@ -12,5 +14,10 @@ public class Test {
             System.out.println("apos chute");
             System.out.println(jogo.chute(entrada));
         }
+
+        */
+
+
+        UserInstance usi = new UserInstance();
     }
 }
