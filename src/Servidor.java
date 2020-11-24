@@ -15,9 +15,14 @@ public class Servidor extends Thread {
     private Socket usuario;
 
 
-    public Servidor() throws IOException {
-        server = new ServerSocket(3322);
-        System.out.println(server.getInetAddress());
+    public Servidor() {
+        try {
+            server = new ServerSocket(3322);
+            System.out.println(server.getInetAddress());
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public String chutar(){
@@ -65,12 +70,8 @@ public class Servidor extends Thread {
     }
 
     public static void main(String[] args) {
-        try {
-            Thread t = new Servidor();
-            t.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Thread t = new Servidor();
+        t.start();
     }
 
     public void run() {

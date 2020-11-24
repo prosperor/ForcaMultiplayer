@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 public class UserInstance {
-    
+
     static int id, id1;
     static boolean x = false, y = false;
     static String nome, palavra, ip;
