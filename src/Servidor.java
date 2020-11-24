@@ -16,13 +16,18 @@ public class Servidor extends Thread {
 
 
     public Servidor() {
+        Scanner entrada = new Scanner(System.in);
+        System.out.println("Qual sera o socket?");
+        Integer socket = entrada.nextInt();
         try {
-            server = new ServerSocket(3322);
-            System.out.println(server.getInetAddress());
+            server = new ServerSocket(socket);
+            URL whatismyip = new URL("http://checkip.amazonaws.com");
+            BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+            String ip = in.readLine();
+            System.out.println("O Endereço para conexão é " + ip);
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
-
     }
 
     public String chutar(){
