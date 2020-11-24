@@ -80,11 +80,7 @@ public class UserInstance {
         System.out.println("palavra: " + palavra + '\n');
        
         while(true){
-            try{
-                PrintStream saida = new PrintStream(client.getOutputStream());
-            }catch(IOException ex){
-                System.out.println("Não foi possivel enviar");
-            }
+            
             chutar();
         }
 
@@ -93,6 +89,13 @@ public class UserInstance {
     public static void chutar(){
         while(true){
             enviarChute(escreverChute());
+            try{
+                PrintStream saida = new PrintStream(client.getOutputStream());
+                saida.println(escreverChute());
+            }catch(IOException ex){
+                System.out.println("Não foi possivel enviar");
+            }
+            
             System.out.println("palavra: " + palavra + '\n');
         }
     }
