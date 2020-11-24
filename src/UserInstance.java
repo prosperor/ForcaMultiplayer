@@ -88,7 +88,7 @@ public class UserInstance {
 
     public static void chutar(){
         while(true){
-            enviarChute(escreverChute());
+            //enviarChute(escreverChute());
             try{
                 PrintStream saida = new PrintStream(client.getOutputStream());
                 saida.println(escreverChute());
