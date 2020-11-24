@@ -107,10 +107,12 @@ public class UserInstance {
         return chute;
     }
 
-    public static void enviarChute(char _chute){
-        sv.chutar(_chute);
-        palavra = sv.getPalavra();
-    }
+    
+    //public static void enviarChute(char _chute){
+    //    sv.chutar(_chute);
+    //    palavra = sv.getPalavra();
+    //}
+    
 
     private static void iniciarClient(String _ip){
 
