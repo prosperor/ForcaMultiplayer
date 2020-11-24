@@ -2,16 +2,24 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.*;
+
 
 public class UserInstance {
+
+    static private PrintWriter out;
+    static private BufferedReader in;
 
     static int id, id1;
     static boolean x = false, y = false;
     static String nome, palavra, ip;
     static Scanner sc1 = new Scanner(System.in);
-    static Servidor sv = new Servidor();
+    static Servidor sv;
 
     static private Socket client;
+    //static DataOutputStream dOut = new DataOutputStream(client.getOutputStream());
+    
+    
 
 
     public static void main(String[] args) {
@@ -23,9 +31,9 @@ public class UserInstance {
 
             switch(op){
                 case 1:
-                    //codigo para se tornar host
+                    sv = new Servidor();
+                    y = true;
                     break;
-
                 case 2:
                     System.out.println("para se conectar, coloque o ip e a porta separados por dois pontos" + '\n' + "exemplo: 0.0.0.0:0000");
                     iniciarClient(sc1.nextLine());
@@ -90,12 +98,16 @@ public class UserInstance {
     public static void chutar(){
         while(true){
             //enviarChute(escreverChute());
+
+            /*
             try{
                 PrintStream saida = new PrintStream(client.getOutputStream());
                 saida.println(escreverChute());
             }catch(IOException ex){
                 System.out.println("Não foi possivel enviar");
             }
+
+            */
             
             System.out.println("palavra: " + palavra + '\n');
         }
@@ -107,11 +119,12 @@ public class UserInstance {
         return chute;
     }
 
-    
-    //public static void enviarChute(char _chute){
-    //    sv.chutar(_chute);
-    //    palavra = sv.getPalavra();
-    //}
+    /*
+    public static void enviarChute(char _chute){
+        sv.chutar(_chute);
+        palavra = sv.getPalavra();
+    }
+    */
     
 
     private static void iniciarClient(String _ip){
@@ -120,8 +133,20 @@ public class UserInstance {
 
         try{
             client = new Socket(stIp[0], Integer.parseInt(stIp[1]));
+            out = new PrintWriter(client.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         }catch(IOException ex){
             System.out.println("Não foi possivel se conectar");
+        }
+    }
+
+    public String sendMessage(String msg) {
+        out.println(msg);
+        try{
+            String resp = in.readLine();
+            return resp;
+        }catch(IOException ex){
+            return "error";
         }
     }
 
