@@ -1,19 +1,49 @@
+import java.net.Socket;
 import java.util.Scanner;
+import java.io.IOException;
+import java.io.PrintStream;
 
 public class UserInstance {
-    static int id, x = 9, id1;
-    static String nome, palavra;
+    static int id, id1;
+    static boolean x = false, y = false;
+    static String nome, palavra, ip;
     static Scanner sc1 = new Scanner(System.in);
     static Servidor sv = new Servidor();
 
+    static private Socket client;
+
+
     public static void main(String[] args) {
-        
-        while(x != 0){
+        int op = 0;
+        while(!y){
+            System.out.println("1 - ser Host" + '\n' + "2 - conectar a Host");
+            op = sc1.nextInt();
+            sc1.nextLine();
+
+            switch(op){
+                case 1:
+                    //codigo para se tornar host
+                    break;
+
+                case 2:
+                    System.out.println("para se conectar, coloque o ip e a porta separados por dois pontos" + '\n' + "exemplo: 0.0.0.0:0000");
+                    iniciarClient(sc1.nextLine());
+                    y = true;
+                    break;
+                
+                default:
+                    System.out.println("Opção invalida");
+                    break;
+            }
+        }
+
+
+        while(!x){
             
             System.out.println("1 - entrar como novo jogador" + '\n' + "2 - entrar como usuario ja existente");
-            x = sc1.nextInt();
+            op = sc1.nextInt();
             sc1.nextLine();
-            switch(x){
+            switch(op){
                 case 1:
                     System.out.println("Insira seu nome: ");
                     nome = sc1.nextLine();
@@ -22,7 +52,7 @@ public class UserInstance {
                     if(!sv.cadastrado(nome)){
                         id = sv.cadastrarUser(nome);
                         System.out.println("Usuario cadastrado como: " + nome + '\n');
-                        x = 0;
+                        x = true;
                     }else{
                         System.out.println("Usuario ja cadastrado");
                     }
@@ -34,10 +64,14 @@ public class UserInstance {
                     sc1.nextLine();
                     if(sv.cadastrado(id1)){
                         //necessario uma forma de obter o id para autenticar e reconectar ao jogo
-                        x = 0;
+                        x = true;
                     }else{
                         System.out.println("ID não corresponde");
                     }
+                    break;
+
+                default:
+                    System.out.println("opção invalida");
                     break;
             }
         }
@@ -46,8 +80,14 @@ public class UserInstance {
         System.out.println("palavra: " + palavra + '\n');
        
         while(true){
+            try{
+                PrintStream saida = new PrintStream(client.getOutputStream());
+            }catch(IOException ex){
+                System.out.println("Não foi possivel enviar");
+            }
             chutar();
         }
+
     }
 
     public static void chutar(){
@@ -66,5 +106,16 @@ public class UserInstance {
     public static void enviarChute(char _chute){
         sv.chutar(_chute);
         palavra = sv.getPalavra();
+    }
+
+    private static void iniciarClient(String _ip){
+
+        String stIp[] = _ip.split(":");
+
+        try{
+            client = new Socket(stIp[0], Integer.parseInt(stIp[1]));
+        }catch(IOException ex){
+            System.out.println("Não foi possivel se conectar");
+        }
     }
 }
