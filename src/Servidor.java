@@ -1,22 +1,35 @@
+import javax.swing.*;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.ServerSocket;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class Servidor {
-    private List<Usuario> jogadores;
-    private JogoForca jogo;
-
-
-    public Servidor() {
-        jogadores = new ArrayList<>();
-        jogo = new JogoForca();
+public class Servidor extends Thread {
+    private List<Usuario> jogadores = new ArrayList<>();;
+    private static JogoForca jogo = new JogoForca();
+    private static ServerSocket server;
+    private Socket usuario;
 
 
+    public Servidor() throws IOException {
+        server = new ServerSocket(3322);
+        System.out.println(server.getInetAddress());
     }
 
-    public String chutar(Character letra){
-        return jogo.chute(letra);
+    public String chutar(){
+        Scanner letra;
+        char in = ' ';
+        try {
+            letra = new Scanner(usuario.getInputStream());
+            in = letra.nextLine().charAt(0);
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        return jogo.chute(in);
     }
 
     public String getPalavra(){
@@ -49,5 +62,32 @@ public class Servidor {
 
     public void reiniciar(){
         jogo.startNewGame();
+    }
+
+    public static void main(String[] args) {
+        try {
+            Thread t = new Servidor();
+            t.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void run() {
+        while (true) {
+            try {
+                System.out.println("Esperando conexão na porta " + server.getLocalPort() + "...");
+                Socket client = server.accept();
+
+                System.out.println("Conectado com o cliente " + client.getRemoteSocketAddress());
+                client.close();
+            } catch (SocketTimeoutException s) {
+                System.out.println("Socket timed out!");
+                break;
+            } catch (IOException e) {
+                e.printStackTrace();
+                break;
+            }
+        }
     }
 }

@@ -1,23 +1,22 @@
+import javax.sound.midi.Soundbank;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
-        /*
-
-        JogoForca jogo = new JogoForca();
-        Scanner tec = new Scanner(System.in);
-
-        while (true) {
-            String chute = tec.nextLine();
-            Character entrada = chute.charAt(0);
-
-            System.out.println("apos chute");
-            System.out.println(jogo.chute(entrada));
+        Socket usuario = new Socket();
+        System.out.println("qual o endereço?");
+        Scanner teclas = new Scanner(System.in);
+        String end = teclas.nextLine();
+        try {
+            usuario = new Socket(end,3322);
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+            System.out.println("não deu certo");
         }
 
-        */
+        System.out.println(usuario.isConnected());
 
-
-        UserInstance usi = new UserInstance();
     }
 }
