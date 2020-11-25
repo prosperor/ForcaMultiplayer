@@ -10,15 +10,13 @@ import java.net.*;
 
 public class UserInstance {
 
-    static private PrintWriter out;
-    static private BufferedReader in;
-
+    
     static DataInputStream inStream;
     static DataOutputStream outStream;
     static BufferedReader br;
 
     static int id, id1;
-    static boolean x = false, y = false, isClient;
+    static boolean x = false, y = false, z = true;
     static String nome, palavra, ip;
     static Scanner sc1 = new Scanner(System.in);
 
@@ -100,22 +98,45 @@ public class UserInstance {
                     break;
             }
         }
-        System.out.println("aguardando palavra");
+        System.out.println("conectado ao jogo - aguardando palavra");
         palavra = sendMessage("cs:palavra");
         System.out.println("palavra: " + palavra + '\n');
        
-        while(true){
-            
-            chutar();
+        while(z){
+            String otl = sc1.nextLine();
+            String[] otlSt = otl.split(":");
+            if(otlSt.length == 1){
+                chutar(otl);
+            }else if(otlSt.length == 2){
+
+                switch(otlSt[1]){
+                    case "sair":
+                        sendMessage(otl);
+                        z = false;
+                        break;
+
+                    case "help":
+                        helper();
+                        break;
+
+                    default:
+                        String rt = sendMessage(otl);
+                        System.out.print(rt + '\n' + '\n');
+                        break;
+                }
+
+            }else{
+                System.out.println("Não é possivel enviar o valor");
+            }
         }
 
     }
 
-    public static void chutar(){
-        while(true){
-            sendMessage("ct:" + escreverChute());    
-            System.out.println("palavra: " + palavra + '\n');
-        }
+    public static void chutar(String _otl){
+
+        palavra =sendMessage("ct:" + _otl.charAt(0));    
+        System.out.println("palavra: " + palavra + '\n');
+        
     }
 
     public static char escreverChute() {
@@ -146,15 +167,6 @@ public class UserInstance {
     }
 
     public static String sendMessage(String msg) {
-        /*
-        out.println(msg);
-        try{
-            String resp = in.readLine();
-            return resp;
-        }catch(IOException ex){
-            return "error";
-        }
-        */
         try{
             outStream.writeUTF(msg);
             outStream.flush();
@@ -187,5 +199,23 @@ public class UserInstance {
         return ip;
     }
 
+    private static void encerrarConexao(){
+        try {
+            inStream.close();
+            outStream.close();
+            client.close();
+            br.close();
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
 
+    public static void helper(){
+        System.out.println("Para enviar um chute, apenas escreva a letra que deseja tentar." + '\n' +
+                            "Para usar um comando escreva cs:" + '\n' +
+                            "Os comandos disponiveis são:" + '\n' +
+                            "   cs:sair    - para se desconectar."  + '\n' +
+                            "   cs:palavra - para exibir a palavra (esse comando é automatico apos realizar um chute)." + '\n' +
+                            "   cs:help    - para ver os comandos.");
+    }
 }
