@@ -11,7 +11,7 @@ public class UserInstance {
     static private BufferedReader in;
 
     static int id, id1;
-    static boolean x = false, y = false;
+    static boolean x = false, y = false, isClient;
     static String nome, palavra, ip;
     static Scanner sc1 = new Scanner(System.in);
     static Servidor sv;
@@ -26,6 +26,7 @@ public class UserInstance {
         int op = 0;
         while(!y){
             System.out.println("1 - ser Host" + '\n' + "2 - conectar a Host");
+            isClient = false;
             op = sc1.nextInt();
             sc1.nextLine();
 
@@ -60,7 +61,7 @@ public class UserInstance {
                     palavra = sv.getPalavra();
                     if(!sv.cadastrado(nome)){
                         id = sv.cadastrarUser(nome);
-                        System.out.println("Usuario cadastrado como: " + nome + '\n');
+                        System.out.println(sendMessage("ca:" + nome));
                         x = true;
                     }else{
                         System.out.println("Usuario ja cadastrado");
@@ -140,7 +141,7 @@ public class UserInstance {
         }
     }
 
-    public String sendMessage(String msg) {
+    public static String sendMessage(String msg) {
         out.println(msg);
         try{
             String resp = in.readLine();
