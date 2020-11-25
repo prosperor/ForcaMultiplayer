@@ -47,10 +47,9 @@ public class UserInstance {
             }
         }
 
-        sc1.nextLine();
-        if(ip != "error"){
-            sendMessage("ca:" + getEIp());
-        }
+        //if(ip != "error"){
+        //    sendMessage("ca:" + getEIp());
+        //}
 
         while(!x){
             
@@ -88,6 +87,7 @@ public class UserInstance {
                         System.out.println("ID não corresponde");
                     }
                 */
+                    x = true;
                     break;
                 default:
                     System.out.println("opção invalida");
@@ -95,7 +95,7 @@ public class UserInstance {
                     break;
             }
         }
-        
+        System.out.println("aguardando palavra");
         palavra = sendMessage("cs:palavra");
         System.out.println("palavra: " + palavra + '\n');
        
