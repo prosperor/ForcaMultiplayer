@@ -113,7 +113,7 @@ public class UserInstance {
 
     public static void chutar(){
         while(true){
-            sendMessage("ch:" + escreverChute());    
+            sendMessage("ct:" + escreverChute());    
             System.out.println("palavra: " + palavra + '\n');
         }
     }
@@ -161,7 +161,7 @@ public class UserInstance {
 
             return inStream.readUTF();
         }catch(Exception e){
-            return "error";
+            return e.toString();
         }
     }
 
