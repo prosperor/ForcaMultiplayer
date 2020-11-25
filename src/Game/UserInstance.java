@@ -1,8 +1,11 @@
+package Game;
+
 import java.net.Socket;
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.*;
+import java.net.*;
 
 
 public class UserInstance {
@@ -14,10 +17,8 @@ public class UserInstance {
     static boolean x = false, y = false, isClient;
     static String nome, palavra, ip;
     static Scanner sc1 = new Scanner(System.in);
-    static Servidor sv;
 
     static private Socket client;
-    //static DataOutputStream dOut = new DataOutputStream(client.getOutputStream());
     
     
 
@@ -25,14 +26,13 @@ public class UserInstance {
     public static void main(String[] args) {
         int op = 0;
         while(!y){
-            System.out.println("1 - ser Host" + '\n' + "2 - conectar a Host");
-            isClient = false;
+            System.out.println("Se o jogo estiver sendo hosteado na sua rede pressione 1 para se conectar, se não, pressione 2");
             op = sc1.nextInt();
             sc1.nextLine();
 
             switch(op){
                 case 1:
-                    sv = new Servidor();
+                    iniciarClient(getLIp());
                     y = true;
                     break;
                 case 2:
@@ -47,6 +47,10 @@ public class UserInstance {
             }
         }
 
+        sc1.nextLine();
+        if(ip != "error"){
+            sendMessage("ca:" + getEIp());
+        }
 
         while(!x){
             
@@ -58,6 +62,9 @@ public class UserInstance {
                     System.out.println("Insira seu nome: ");
                     nome = sc1.nextLine();
                     
+                    //sendMessage("ca:" + nome);
+
+                    /*
                     palavra = sv.getPalavra();
                     if(!sv.cadastrado(nome)){
                         id = sv.cadastrarUser(nome);
@@ -66,9 +73,11 @@ public class UserInstance {
                     }else{
                         System.out.println("Usuario ja cadastrado");
                     }
+                    */
                     break;
     
                 case 2:
+                /*
                     System.out.println("Insira seu ID: ");
                     id1 = sc1.nextInt();
                     sc1.nextLine();
@@ -78,15 +87,16 @@ public class UserInstance {
                     }else{
                         System.out.println("ID não corresponde");
                     }
+                */
                     break;
-
                 default:
                     System.out.println("opção invalida");
+                    
                     break;
             }
         }
         
-        
+        palavra = sendMessage("cs:palavra");
         System.out.println("palavra: " + palavra + '\n');
        
         while(true){
@@ -98,18 +108,7 @@ public class UserInstance {
 
     public static void chutar(){
         while(true){
-            //enviarChute(escreverChute());
-
-            /*
-            try{
-                PrintStream saida = new PrintStream(client.getOutputStream());
-                saida.println(escreverChute());
-            }catch(IOException ex){
-                System.out.println("Não foi possivel enviar");
-            }
-
-            */
-            
+            sendMessage("ch:" + escreverChute());    
             System.out.println("palavra: " + palavra + '\n');
         }
     }
@@ -120,12 +119,6 @@ public class UserInstance {
         return chute;
     }
 
-    /*
-    public static void enviarChute(char _chute){
-        sv.chutar(_chute);
-        palavra = sv.getPalavra();
-    }
-    */
     
 
     private static void iniciarClient(String _ip){
@@ -149,6 +142,28 @@ public class UserInstance {
         }catch(IOException ex){
             return "error";
         }
+    }
+
+    public static String getLIp() {
+        try{
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            return (inetAddress.getHostAddress());
+        }catch(Exception e){
+            return "error" ;
+        }
+        
+    }
+
+    public static String getEIp(){
+        try{
+            URL whatismyip = new URL("http://checkip.amazonaws.com");
+            BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+    
+            String ip = in.readLine(); //you get the IP as a String
+        }catch(Exception e){
+            ip = "error";
+        }
+        return ip;
     }
 
 
