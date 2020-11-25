@@ -1,4 +1,6 @@
-import java.util.List;
+package Servidor;
+
+import Servidor.ManipulaTxt;
 
 public class JogoForca {
     private String word;

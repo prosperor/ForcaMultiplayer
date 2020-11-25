@@ -1,3 +1,5 @@
+package Comum;
+
 public class Usuario {
     private int ID;
     private String nome;
