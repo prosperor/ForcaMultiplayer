@@ -13,6 +13,10 @@ public class UserInstance {
     static private PrintWriter out;
     static private BufferedReader in;
 
+    static DataInputStream inStream;
+    static DataOutputStream outStream;
+    static BufferedReader br;
+
     static int id, id1;
     static boolean x = false, y = false, isClient;
     static String nome, palavra, ip;
@@ -32,7 +36,8 @@ public class UserInstance {
 
             switch(op){
                 case 1:
-                    iniciarClient(getLIp());
+                System.out.println("Escreva o valor do Socket");
+                    iniciarClient(getLIp() + ":" + sc1.nextLine());
                     y = true;
                     break;
                 case 2:
@@ -126,20 +131,36 @@ public class UserInstance {
         String stIp[] = _ip.split(":");
 
         try{
+            
             client = new Socket(stIp[0], Integer.parseInt(stIp[1]));
+            /*
             out = new PrintWriter(client.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            */
+            inStream=new DataInputStream(client.getInputStream());
+            outStream=new DataOutputStream(client.getOutputStream());
+            br=new BufferedReader(new InputStreamReader(System.in));
         }catch(IOException ex){
             System.out.println("Não foi possivel se conectar");
         }
     }
 
     public static String sendMessage(String msg) {
+        /*
         out.println(msg);
         try{
             String resp = in.readLine();
             return resp;
         }catch(IOException ex){
+            return "error";
+        }
+        */
+        try{
+            outStream.writeUTF(msg);
+            outStream.flush();
+
+            return inStream.readUTF();
+        }catch(Exception e){
             return "error";
         }
     }
