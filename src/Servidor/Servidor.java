@@ -27,7 +27,9 @@ public class Servidor extends Thread {
             //Servidor espera que o cliente faça uma conexão
             System.out.println("Esperando");
             cliente = servidor.accept();
+            System.out.println("foi");
             System.out.println("Cliente do IP " + cliente.getLocalAddress() + " conectado");
+
             //Ligação com a saida e entrada do cliente
             entradaDeDados = new DataInputStream(cliente.getInputStream());
             saidaDeDados = new DataOutputStream(cliente.getOutputStream());
@@ -49,6 +51,7 @@ public class Servidor extends Thread {
                                 break;
                             case "palavra":
                                 mesagemServidor = getPalavraMascarada();
+                                System.out.println("Mandando palavra mascarada: " + mesagemServidor);
                                 saidaDeDados.writeUTF(mesagemServidor);
                                 saidaDeDados.flush();
                                 break;
