@@ -27,8 +27,7 @@ public class Servidor extends Thread {
             //Servidor espera que o cliente faça uma conexão
             System.out.println("Esperando");
             cliente = servidor.accept();
-            System.out.println("foi");
-            System.out.println("Cliente do IP " + cliente.getLocalAddress() + " conectado");
+            System.out.println("Cliente do IP " + cliente.getLocalAddress().getHostName() + " conectado");
 
             //Ligação com a saida e entrada do cliente
             entradaDeDados = new DataInputStream(cliente.getInputStream());
@@ -36,29 +35,35 @@ public class Servidor extends Thread {
             leitorDeDados = new BufferedReader(new InputStreamReader(System.in));
 
             //Variaveis para manipulação
-            String mesagemServidor = "";
-            String[] messagemCliente;
+            String mensagemServidor = "";
+            String[] mensagemCliente;
             int opc = 0;
 
             while(opc != -1){
-                messagemCliente = entradaDeDados.readUTF().split(":");
-                switch (messagemCliente[0]){
+                mensagemCliente = entradaDeDados.readUTF().split(":");
+                switch (mensagemCliente[0]){
                     case "cs":
-                        switch (messagemCliente[1]){
+                        switch (mensagemCliente[1]){
                             case "sair":
                                 encerrarConexao();
                                 opc = -1;
                                 break;
                             case "palavra":
-                                mesagemServidor = getPalavraMascarada();
-                                System.out.println("Mandando palavra mascarada: " + mesagemServidor);
-                                saidaDeDados.writeUTF(mesagemServidor);
+                                mensagemServidor = getPalavraMascarada();
+                                System.out.println("Mandando palavra mascarada: " + mensagemServidor);
+                                saidaDeDados.writeUTF(mensagemServidor);
                                 saidaDeDados.flush();
                                 break;
                             default:
                                 System.out.println("Comando ainda não implementado");
                                 break;
                         }
+                        break;
+                    case "ct":
+                        mensagemServidor = inputChute(mensagemCliente[1].charAt(0));
+                        System.out.println("Retornando resultado do chute: " + mensagemServidor);
+                        saidaDeDados.writeUTF(mensagemServidor);
+                        saidaDeDados.flush();
                         break;
                     default:
                         System.out.println("Não encontrado");
@@ -95,5 +100,9 @@ public class Servidor extends Thread {
 
     private static String getPalavraMascarada(){
         return game.getWordChute();
+    }
+
+    private static String inputChute(char letra){
+        return game.chute(letra);
     }
 }
