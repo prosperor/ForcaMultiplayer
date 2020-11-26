@@ -1,10 +1,12 @@
 package Servidor;
 
+import java.util.Arrays;
+
 import Servidor.ManipulaTxt;
 
 public class JogoForca {
     private String word;
-    private String wordChute;
+    private String wordChute, letrasUsadas;
     private ManipulaTxt manipulador = new ManipulaTxt();
 
     public JogoForca(){
@@ -13,7 +15,6 @@ public class JogoForca {
 
     public String chute(Character letra){
         letra = letra.toString().toUpperCase().charAt(0);
-
         StringBuilder saida = new StringBuilder(wordChute);
         if (Character.isAlphabetic(letra)){
             if (word.contains(letra.toString())){
@@ -39,6 +40,7 @@ public class JogoForca {
     }
 
     public void startNewGame(){
+        letrasUsadas = "";
         word = manipulador.getPalavra();
         wordChute = preparadorDePalavraMascarada(word);
     }
@@ -48,6 +50,22 @@ public class JogoForca {
         String sinal = "_";
         saida.append(sinal.repeat(entrada.length()));
         return saida.toString();
+    }
+
+    public String getLetrasUsadas(char letra){
+        letrasUsadas = (letrasUsadas +  letra).toUpperCase().trim();
+        letrasUsadas = letrasUsadas.replace(" ", "");
+
+        char[] st = letrasUsadas.toCharArray();
+        Arrays.sort(st);
+        letrasUsadas = "";
+
+        for(int i = 0; i < st.length; i++){
+            letrasUsadas = letrasUsadas + st[i] + " ";
+        }
+        
+        
+        return ":Letras usadas - " + letrasUsadas;
     }
 
 }

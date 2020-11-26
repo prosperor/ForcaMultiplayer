@@ -6,14 +6,18 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import Comum.Usuario;
+
 public class ThreadClienteServidor extends Thread {
     private static Socket cliente;
-    private int ID;
+    private int ID, count;
     private static DataInputStream entradaDeDados;
     private static DataOutputStream saidaDeDados;
     private static BufferedReader leitorDeDados;
+    private static Usuario user;
 
     public ThreadClienteServidor(Socket _cliente, int _ID){
+        user = new Usuario(_ID, "nomeExemplo");
         cliente = _cliente;
         ID = _ID;
         ligarConexao();
@@ -29,7 +33,7 @@ public class ThreadClienteServidor extends Thread {
     }
 
     public void run(){
-        String mensagemServidor = "";
+        String mensagemServidor = "", extra;
         String[] mensagemCliente;
         int opc = 0;
         try {
@@ -53,8 +57,16 @@ public class ThreadClienteServidor extends Thread {
                         }
                         break;
                     case "ct":
+                        extra = mensagemServidor;
                         mensagemServidor = Servidor.inputChute(mensagemCliente[1].charAt(0));
                         System.out.println("Retornando resultado do chute: " + mensagemServidor);
+                        
+                        if(extra != mensagemServidor){
+                            user.addPts(mensagemServidor);
+                        }else{
+                            user.rmvPts(Servidor.count);
+                        }
+
                         saidaDeDados.writeUTF(mensagemServidor);
                         saidaDeDados.flush();
                         break;

@@ -17,7 +17,7 @@ public class UserInstance {
 
     static int id, id1;
     static boolean x = false, y = false, z = true;
-    static String nome, palavra, ip;
+    static String nome, palavra, ip, stPalavra[];
     static Scanner sc1 = new Scanner(System.in);
 
     static private Socket client;
@@ -135,7 +135,8 @@ public class UserInstance {
     public static void chutar(String _otl){
 
         palavra =sendMessage("ct:" + _otl.charAt(0));    
-        System.out.println("palavra: " + palavra + '\n');
+        stPalavra = palavra.split(":");
+        System.out.println("palavra: " + stPalavra[0] + '\n' + stPalavra[1]);
         
     }
 

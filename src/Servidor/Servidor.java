@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Servidor {
     private static ServerSocket servidor;
     private static JogoForca game = new JogoForca();
-
+    public static int count = 0;
     public static void main(String[] args) { //Inicia o Servidor
         Scanner tecla = new Scanner(System.in);
         System.out.println("Qual será o Socket");
@@ -51,7 +51,8 @@ public class Servidor {
     }
 
     public static String inputChute(char letra){
-        return game.chute(letra);
+        contar();
+        return game.chute(letra) + game.getLetrasUsadas(letra);
     }
 
    /* private static void encerrarConexao(){
@@ -67,4 +68,11 @@ public class Servidor {
 
 
     */
+
+    public static void contar(){
+        count++;
+        if(count > 7){
+            count = 1;
+        }
+    }
 }
