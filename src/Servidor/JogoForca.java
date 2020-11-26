@@ -53,16 +53,19 @@ public class JogoForca {
     }
 
     public String getLetrasUsadas(char letra){
-        letrasUsadas = (letrasUsadas +  letra).toUpperCase().trim();
-        letrasUsadas = letrasUsadas.replace(" ", "");
+        if(!letrasUsadas.contains(Character.toString(letra).toUpperCase())){
+            letrasUsadas = (letrasUsadas +  letra).toUpperCase().trim();
+            letrasUsadas = letrasUsadas.replace(" ", "");
 
-        char[] st = letrasUsadas.toCharArray();
-        Arrays.sort(st);
-        letrasUsadas = "";
+            char[] st = letrasUsadas.toCharArray();
+            Arrays.sort(st);
+            letrasUsadas = "";
 
-        for(int i = 0; i < st.length; i++){
-            letrasUsadas = letrasUsadas + st[i] + " ";
+            for(int i = 0; i < st.length; i++){
+                letrasUsadas = letrasUsadas + st[i] + " ";
+            }
         }
+        
         
         
         return ":Letras usadas - " + letrasUsadas;

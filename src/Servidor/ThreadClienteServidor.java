@@ -17,7 +17,7 @@ public class ThreadClienteServidor extends Thread {
     private static Usuario user;
 
     public ThreadClienteServidor(Socket _cliente, int _ID){
-        user = new Usuario(_ID, "nomeExemplo");
+        
         cliente = _cliente;
         ID = _ID;
         ligarConexao();
@@ -33,7 +33,7 @@ public class ThreadClienteServidor extends Thread {
     }
 
     public void run(){
-        String mensagemServidor = "", extra;
+        String mensagemServidor = "", extra[];
         String[] mensagemCliente;
         int opc = 0;
         try {
@@ -51,21 +51,37 @@ public class ThreadClienteServidor extends Thread {
                                 saidaDeDados.writeUTF(mensagemServidor);
                                 saidaDeDados.flush();
                                 break;
+                            case "cadastrar":
+                                Servidor.userAr[ID-1].setNome(mensagemCliente[2]);
+                                saidaDeDados.writeUTF("cadastrado");
+                                break;
                             default:
                                 System.out.println("Comando ainda não implementado");
                                 break;
                         }
                         break;
                     case "ct":
-                        extra = mensagemServidor;
+                        extra = mensagemServidor.split(":");
+
                         mensagemServidor = Servidor.inputChute(mensagemCliente[1].charAt(0));
                         System.out.println("Retornando resultado do chute: " + mensagemServidor);
-                        
-                        if(extra != mensagemServidor){
-                            user.addPts(mensagemServidor);
+
+                        if(!extra[0].equals(mensagemServidor.split(":")[0].trim())){
+                            if((!mensagemServidor.split(":")[0].contains("_"))){
+                                Servidor.atribuir5pts();
+                            }else{
+                                Servidor.userAr[ID-1].addPts(1);
+                            }
+                        }else if(extra[1].contains(Character.toString(mensagemCliente[1].charAt(0)))){
+                            Servidor.userAr[ID-1].rmvPts(1);
                         }else{
-                            user.rmvPts(Servidor.count);
+                            Servidor.userAr[ID-1].rmvPts(3);
                         }
+
+                        if(Servidor.isEnd()){
+                            Servidor.restart();
+                        }
+                        mensagemServidor = mensagemServidor + ":" + getAllPts();
 
                         saidaDeDados.writeUTF(mensagemServidor);
                         saidaDeDados.flush();
@@ -83,6 +99,10 @@ public class ThreadClienteServidor extends Thread {
 
     private String[] dividirEntrada(String entrada) {
         return entrada.split(":");
+    }
+
+    public String getAllPts(){
+        return Servidor.getAPts();
     }
 
 }

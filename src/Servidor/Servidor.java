@@ -3,10 +3,17 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
+import Comum.Usuario;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Servidor {
     private static ServerSocket servidor;
     private static JogoForca game = new JogoForca();
+    private static List<Usuario> user = new ArrayList<Usuario>();
+    public static Usuario userAr[];
     public static int count = 0;
     public static void main(String[] args) { //Inicia o Servidor
         Scanner tecla = new Scanner(System.in);
@@ -30,6 +37,9 @@ public class Servidor {
                 Socket cliente = servidor.accept(); //Servidor aceita uma conexão
                 System.out.println("Servidor aceitou o cliente numero " + ID++);
                 ThreadClienteServidor t = new ThreadClienteServidor(cliente,ID);
+                user.add(new Usuario(ID, "nome_exemplo"));
+                userAr = new Usuario[user.size()];
+                user.toArray(userAr);
                 t.start();
             }
         }catch (IOException e){
@@ -71,8 +81,33 @@ public class Servidor {
 
     public static void contar(){
         count++;
-        if(count > 7){
-            count = 1;
+        if(count == 7){
+            count = 0;
+            for(int i = 0; i<userAr.length; i++){
+                userAr[i].rmvPts(5);
+            }
         }
+    }
+
+    public static void atribuir5pts(){
+        for(int i = 0; i<userAr.length; i++){
+            userAr[i].addPts(5);
+        }
+    }
+    
+    public static boolean isEnd(){
+        return game.isEnd();
+    }
+
+    public static void restart(){
+        game.startNewGame();
+    }
+
+    public static String getAPts(){
+        String ptsL = "";
+        for(int i = 0; i < userAr.length; i++){
+            ptsL = ptsL + userAr[i].getNome() + " - " + userAr[i].getPts() + " ";
+        }
+        return ptsL;
     }
 }

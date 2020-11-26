@@ -23,12 +23,26 @@ public class Usuario {
         this.nome = _nome;
     }
 
-    public void addPts(String _palavra){
-        pontos = PtsManipulator.add(pontos, _palavra);
+    public void addPts(int tp){
+        if(tp == 1){
+            pontos = PtsManipulator.add(pontos);
+        }else if(tp == 5){
+            pontos = PtsManipulator.win(pontos);
+        }
     }
 
-    public void rmvPts(int _count){
-        pontos = PtsManipulator.rmv(pontos, _count);
+    public void rmvPts(int tp){
+        if(tp == 1){
+            pontos = PtsManipulator.rmv1(pontos);
+        }else if(tp == 3){
+            pontos = PtsManipulator.rmv(pontos);
+        }else if(tp == 5){
+            pontos = PtsManipulator.rmv5(pontos);
+        }
+    }
+
+    public int getPts(){
+        return pontos;
     }
 }
 

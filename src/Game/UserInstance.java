@@ -50,54 +50,12 @@ public class UserInstance {
             }
         }
 
-        //if(ip != "error"){
-        //    sendMessage("ca:" + getEIp());
-        //}
+        System.out.println("Insira seu nome:");
+        nome = sc1.nextLine();
+        nome = sendMessage("cs:cadastrar:" + nome);
+        System.out.println(nome);
+        
 
-        while(!x){
-            
-            System.out.println("1 - entrar como novo jogador" + '\n' + "2 - entrar como usuario ja existente");
-            op = sc1.nextInt();
-            sc1.nextLine();
-            switch(op){
-                case 1:
-                    System.out.println("Insira seu nome: ");
-                    nome = sc1.nextLine();
-                    
-                    //sendMessage("ca:" + nome);
-
-                    /*
-                    palavra = sv.getPalavra();
-                    if(!sv.cadastrado(nome)){
-                        id = sv.cadastrarUser(nome);
-                        System.out.println(sendMessage("ca:" + nome));
-                        x = true;
-                    }else{
-                        System.out.println("Usuario ja cadastrado");
-                    }
-                    */
-                    break;
-    
-                case 2:
-                /*
-                    System.out.println("Insira seu ID: ");
-                    id1 = sc1.nextInt();
-                    sc1.nextLine();
-                    if(sv.cadastrado(id1)){
-                        //necessario uma forma de obter o id para autenticar e reconectar ao jogo
-                        x = true;
-                    }else{
-                        System.out.println("ID não corresponde");
-                    }
-                */
-                    x = true;
-                    break;
-                default:
-                    System.out.println("opção invalida");
-                    
-                    break;
-            }
-        }
         System.out.println("conectado ao jogo - aguardando palavra");
         palavra = sendMessage("cs:palavra");
         System.out.println("palavra: " + palavra + '\n');
@@ -136,7 +94,7 @@ public class UserInstance {
 
         palavra =sendMessage("ct:" + _otl.charAt(0));    
         stPalavra = palavra.split(":");
-        System.out.println("palavra: " + stPalavra[0] + '\n' + stPalavra[1]);
+        System.out.println("pontuação: " + stPalavra[2] + '\n' + "palavra: " + stPalavra[0] + '\n' + stPalavra[1]);
         
     }
 
