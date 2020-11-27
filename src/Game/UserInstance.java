@@ -8,8 +8,6 @@ import java.net.*;
 
 
 public class UserInstance {
-
-    
     static DataInputStream inStream;
     static DataOutputStream outStream;
    
@@ -18,7 +16,6 @@ public class UserInstance {
     static String nome, palavra, ip, stPalavra[];
     static Scanner sc1 = new Scanner(System.in);
     static private Socket client;
-    static ThreadRecebimento escutador;
     
 
 
@@ -54,7 +51,7 @@ public class UserInstance {
         System.out.println("conectado ao jogo - aguardando palavra");
         palavra = sendMessage("cs:palavra");
         System.out.println("palavra: " + palavra + '\n');
-        escutador = new ThreadRecebimento(inStream);
+
 
         while(z){
             String otl = sc1.nextLine();
@@ -171,4 +168,6 @@ public class UserInstance {
                             "   cs:palavra - para exibir a palavra (esse comando é automatico apos realizar um chute)." + '\n' +
                             "   cs:help    - para ver os comandos.");
     }
+
+
 }

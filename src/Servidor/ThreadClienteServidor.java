@@ -16,8 +16,6 @@ public class ThreadClienteServidor extends Thread {
         cliente = _cliente;
         ID = _ID;
         ligarConexao();
-        Servidor.mapearEntradaCliente(saidaDeDados);
-        Servidor.setAtivarTask();
     }
 
     private void ligarConexao() {

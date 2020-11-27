@@ -67,11 +67,11 @@ public class JogoForca {
                 letrasUsadas = letrasUsadas + st[i] + " ";
             }
         }
-        return ":Letras usadas - " + letrasUsadas;
+        return "Letras usadas - " + letrasUsadas;
     }
 
     public String getLetrasUsadas(){
-        return ":Letras usadas - " + letrasUsadas;
+        return "Letras usadas - " + letrasUsadas;
     }
 
 }

@@ -4,16 +4,14 @@ import java.net.*;
 import java.util.Scanner;
 import Comum.Usuario;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Servidor {
-    private static final JogoForca game = new JogoForca();
-    private static final ArrayList<DataOutputStream> entradaDosClientes = new ArrayList<>();
-    private static final TaskThread envioPeriodico = new TaskThread();
+
     private static List<Usuario> user = new ArrayList<Usuario>();
-    public static Usuario userAr[];
+    public static Usuario[] userAr;
     public static int count = 0;
+    public static final JogoForca game = new JogoForca();
 
     public static void main(String[] args) { //Inicia o Servidor
         Scanner tecla = new Scanner(System.in);
@@ -34,6 +32,7 @@ public class Servidor {
                 System.out.println("O IP é: " + in.readLine() + '\n' + "O Socket é " + socket);
                 //Servidor espera que o cliente faça uma conexão
                 System.out.println("Esperando" + '\n');
+
 
                 Socket cliente = servidor.accept(); //Servidor aceita uma conexão
                 System.out.println("Servidor aceitou o cliente numero " + ID++);
@@ -62,26 +61,10 @@ public class Servidor {
         return game.getWordChute();
     }
 
-    public static String inputChute(char letra){
+    public static synchronized String inputChute(char letra){
         return game.chute(letra);
     }
 
-    public static void mapearEntradaCliente(DataOutputStream entrada){
-        entradaDosClientes.add(entrada);
-    }
-
-    public static void setAtivarTask(){
-        if (!envioPeriodico.isAlive()){
-            envioPeriodico.start();
-        }
-    }
-
-    public static void mandarAtualizacao() throws IOException{
-        for (DataOutputStream entradaCliente : entradaDosClientes){
-            entradaCliente.writeUTF(game.getWordChute() + ":" + game.getLetrasUsadas());
-            entradaCliente.flush();
-        }
-    }
 
     public static void contar(){
         count++;
@@ -93,7 +76,7 @@ public class Servidor {
         }
     }
 
-    public static void atribuir5pts(){
+    public synchronized static void atribuir5pts(){
         for(int i = 0; i<userAr.length; i++){
             userAr[i].addPts(5);
         }
@@ -107,7 +90,7 @@ public class Servidor {
         game.startNewGame();
     }
 
-    public static String getAPts(){
+    public synchronized static String getAPts(){
         String ptsL = "";
         for(int i = 0; i < userAr.length; i++){
             ptsL = ptsL + userAr[i].getNome() + " - " + userAr[i].getPts() + " ";
