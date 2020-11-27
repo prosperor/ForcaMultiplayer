@@ -30,7 +30,7 @@ public class JogoForca {
             }
         }
         wordChute = saida.toString();
-        return wordChute;
+        return wordChute + ":" + getLetrasUsadas(letra);
     }
 
     public String getWordChute(){
@@ -56,21 +56,19 @@ public class JogoForca {
 
     public String getLetrasUsadas(char letra){
         if (!letrasUsadas.contains(letra+"")) {
-            letrasUsadas = (letrasUsadas + letra).toUpperCase().trim();
-            letrasUsadas = letrasUsadas.replace(" ", "");
+            if (Character.isAlphabetic(letra)) {
+                letrasUsadas = (letrasUsadas + letra).toUpperCase().trim();
+                letrasUsadas = letrasUsadas.replace(" ", "");
 
-            char[] st = letrasUsadas.toCharArray();
-            Arrays.sort(st);
-            letrasUsadas = "";
+                char[] st = letrasUsadas.toCharArray();
+                Arrays.sort(st);
+                letrasUsadas = "";
 
-            for (int i = 0; i < st.length; i++) {
-                letrasUsadas = letrasUsadas + st[i] + " ";
+                for (int i = 0; i < st.length; i++) {
+                    letrasUsadas = letrasUsadas + st[i] + " ";
+                }
             }
         }
-        return "Letras usadas - " + letrasUsadas;
-    }
-
-    public String getLetrasUsadas(){
         return "Letras usadas - " + letrasUsadas;
     }
 

@@ -62,7 +62,6 @@ public class ThreadClienteServidor extends Thread {
                         extra = mensagemServidor.split(":");
 
                         mensagemServidor = Servidor.inputChute(mensagemCliente[1].charAt(0));
-                        System.out.println("Retornando resultado do chute: " + mensagemServidor);
 
                         if(!extra[0].equals(mensagemServidor.split(":")[0].trim())){
                             if((!mensagemServidor.split(":")[0].contains("_"))){
@@ -80,6 +79,8 @@ public class ThreadClienteServidor extends Thread {
                             Servidor.restart();
                         }
                         mensagemServidor = mensagemServidor + ":" + getAllPts();
+
+                            System.out.println("Retornando resultado do chute: " + mensagemServidor);
 
                         saidaDeDados.writeUTF(mensagemServidor);
                         saidaDeDados.flush();
