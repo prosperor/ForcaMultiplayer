@@ -4,9 +4,13 @@ O projeto implementa um jogo de forca multijogador, em que cada jogador atua a p
 
 O objetivo principal desse projeto é a manipulação dos mecanismos de paralelismo e concorrência, desenvolvendo um sistema que envolve múltiplos processos e threads. Além disso, serão utilizados mecanismos de comunicação entre processos - compartilhamento de memória e troca de mensagens - para orquestrar o funcionamento do jogo.
 
+## Instalação:
+Para instalar, basta baixar a ForcaMultiplayer.zip na [release](https://github.com/prosperor/ForcaMultiplayer/releases/tag/1.0.0), extrair a pasta ForcaMultiplayer para o local onde deseja instalar o jogo.
+Importante: dicio.txt e Servidor.jar devem sempre estar juntos.
+
 ## Configuração previa:
 
-O jogo tem dois executaveis `.jar`, um que é a instancia do usuario, e outro que é o servidor onde o jogo ira rodar. O jogador que for hospedar o jogo terá que ter ambos os executaveis `.jar`, enquanto quem for apenas se conectar ao jogo, tera que ter apenas o `.jar` referente a instancia de usuario.
+O jogo tem dois executaveis `.jar`, um que é a instancia do usuario, e outro que é o servidor onde o jogo ira rodar. O jogador que for hospedar o jogo terá que utilizar ambos os executaveis `.jar`, assim como o arquivo `dicio.txt`, enquanto quem for apenas se conectar ao jogo, tera que ter apenas o `.jar` referente a instancia de usuario.
 
 para jogar com alguém que esteja conectado em outra rede de internet, será nececssario configurar uma porta no seu roteador de internet mas caso todos os jogadores estejam na mesma rede, nenhuma porta terá de ser configurada.
 
