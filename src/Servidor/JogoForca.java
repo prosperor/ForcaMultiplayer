@@ -30,6 +30,7 @@ public class JogoForca {
             }
         }
         wordChute = saida.toString();
+
         return wordChute + ":" + getLetrasUsadas(letra);
     }
 

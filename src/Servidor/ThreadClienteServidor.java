@@ -8,8 +8,8 @@ import Comum.Usuario;
 public class ThreadClienteServidor extends Thread {
     private static Socket cliente;
     private int ID, count;
-    private static DataInputStream entradaDeDados;
-    private static DataOutputStream saidaDeDados;
+    private DataInputStream entradaDeDados;
+    private DataOutputStream saidaDeDados;
     private static Usuario user;
 
     public ThreadClienteServidor(Socket _cliente, int _ID) {
@@ -66,20 +66,16 @@ public class ThreadClienteServidor extends Thread {
 
                         extra2[0] = Servidor.getPalavraMascarada().trim();
                         extra2[1] = Servidor.getLetrasUsadas().trim();
-                        System.out.println(extra[0].equals(extra2[0])) ;
-                        System.out.println(extra[0] + " , "+  extra2[0]);
+
                         if(extra[0].equals(extra2[0])){
                             if(extra[1].contains(Character.toString(extra2[1].charAt(0)))){
-                                System.out.println("-1pt");
                                 Servidor.userAr[ID-1].rmvPts(1);
                             }else{
                                 Servidor.userAr[ID-1].rmvPts(3);
                             }
                         }else if((!mensagemServidor.split(":")[0].contains("_"))){
-                            System.out.println("5pt");
                             //Servidor.atribuir5pts();
                         }else{
-                            System.out.println("1pt");
                             Servidor.userAr[ID-1].addPts(1);
                         }
 
@@ -87,9 +83,9 @@ public class ThreadClienteServidor extends Thread {
                             Servidor.atribuir5pts();;
                             Servidor.restart();
                         }
-                        mensagemServidor = mensagemServidor + ":" + getAllPts();
 
-                            //System.out.println("Retornando resultado do chute: " + mensagemServidor);
+                        mensagemServidor = mensagemServidor + ":" + getAllPts();
+                        System.out.println("Retornando resultado do chute: " + '\n'+  mensagemServidor);
 
                         saidaDeDados.writeUTF(mensagemServidor);
                         saidaDeDados.flush();

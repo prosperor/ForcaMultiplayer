@@ -11,7 +11,7 @@ public class Servidor {
     private static List<Usuario> user = new ArrayList<Usuario>();
     public static Usuario[] userAr;
     public static int count = 0;
-    public static final JogoForca game = new JogoForca();
+    private static final JogoForca game = new JogoForca();
 
     public static void main(String[] args) { //Inicia o Servidor
         Scanner tecla = new Scanner(System.in);
@@ -55,13 +55,11 @@ public class Servidor {
 
     }
 
-
-
     public static String getPalavraMascarada(){
         return game.getWordChute();
     }
 
-    public static synchronized String inputChute(char letra){
+    public static String inputChute(char letra){
         contar();
         return game.chute(letra);
     }
@@ -69,7 +67,6 @@ public class Servidor {
 
     public static void contar(){
         count++;
-        System.out.println(count);
         if(count == 7){
             count = 0;
             for(int i = 0; i<userAr.length; i++){
@@ -78,7 +75,7 @@ public class Servidor {
         }
     }
 
-    public synchronized static void atribuir5pts(){
+    public static void atribuir5pts(){
         for(int i = 0; i<userAr.length; i++){
             userAr[i].addPts(5);
         }
@@ -92,7 +89,7 @@ public class Servidor {
         game.startNewGame();
     }
 
-    public synchronized static String getAPts(){
+    public static String getAPts(){
         String ptsL = "";
         for(int i = 0; i < userAr.length; i++){
             ptsL = ptsL + userAr[i].getNome() + " - " + userAr[i].getPts() + " ";

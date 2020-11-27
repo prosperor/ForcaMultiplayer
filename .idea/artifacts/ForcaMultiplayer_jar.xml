@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ForcaMultiplayer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ForcaMultiplayer_jar</output-path>
+    <root id="archive" name="ForcaMultiplayer.jar">
+      <element id="module-output" name="ForcaMultiplayer" />
+    </root>
+  </artifact>
+</component>
