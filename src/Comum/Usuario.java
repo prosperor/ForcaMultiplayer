@@ -45,4 +45,3 @@ public class Usuario {
         return pontos;
     }
 }
-

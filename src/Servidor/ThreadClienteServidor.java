@@ -1,11 +1,8 @@
 package Servidor;
-
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-
 import Comum.Usuario;
 
 public class ThreadClienteServidor extends Thread {
@@ -13,32 +10,34 @@ public class ThreadClienteServidor extends Thread {
     private int ID, count;
     private static DataInputStream entradaDeDados;
     private static DataOutputStream saidaDeDados;
-    private static BufferedReader leitorDeDados;
     private static Usuario user;
 
-    public ThreadClienteServidor(Socket _cliente, int _ID){
-        
+    public ThreadClienteServidor(Socket _cliente, int _ID) {
         cliente = _cliente;
         ID = _ID;
         ligarConexao();
+        Servidor.mapearEntradaCliente(saidaDeDados);
+        Servidor.setAtivarTask();
     }
 
-    private void ligarConexao(){
+    private void ligarConexao() {
         try {
             entradaDeDados = new DataInputStream(cliente.getInputStream());
             saidaDeDados = new DataOutputStream(cliente.getOutputStream());
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void run(){
+    public void run() {
         String mensagemServidor = "", extra[];
         String[] mensagemCliente;
         int opc = 0;
+
         try {
             while (opc != -1) {
                 mensagemCliente = entradaDeDados.readUTF().split(":");
+                System.out.println("Cliente " + ID + " enviou o seguinte comando " + mensagemCliente[0] + " " + mensagemCliente[1]);
                 switch (mensagemCliente[0]) {
                     case "cs":
                         switch (mensagemCliente[1]) {
@@ -46,12 +45,12 @@ public class ThreadClienteServidor extends Thread {
                                 opc = -1;
                                 break;
                             case "palavra":
-                                mensagemServidor = Servidor.getPalavraMascarada();
-                                System.out.println("Mandando palavra mascarada: " + mensagemServidor);
-                                saidaDeDados.writeUTF(mensagemServidor);
-                                saidaDeDados.flush();
+                            mensagemServidor = Servidor.getPalavraMascarada();
+                            System.out.println("Mandando palavra mascarada: " + mensagemServidor);
+                            saidaDeDados.writeUTF(mensagemServidor);
+                            saidaDeDados.flush();
                                 break;
-                            case "cadastrar":
+                                case "cadastrar":
                                 Servidor.userAr[ID-1].setNome(mensagemCliente[2]);
                                 saidaDeDados.writeUTF("cadastrado");
                                 break;
@@ -60,7 +59,8 @@ public class ThreadClienteServidor extends Thread {
                                 break;
                         }
                         break;
-                    case "ct":
+
+                        case "ct":
                         extra = mensagemServidor.split(":");
 
                         mensagemServidor = Servidor.inputChute(mensagemCliente[1].charAt(0));
@@ -86,23 +86,32 @@ public class ThreadClienteServidor extends Thread {
                         saidaDeDados.writeUTF(mensagemServidor);
                         saidaDeDados.flush();
                         break;
+
                     default:
                         System.out.println("Não encontrado");
                         break;
                 }
-        }
-        }catch (IOException e){
+                System.out.println("");
+            }
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
-    }
-
-    private String[] dividirEntrada(String entrada) {
-        return entrada.split(":");
+        encerrarConexao();
     }
 
     public String getAllPts(){
         return Servidor.getAPts();
+    }
+
+
+    private void encerrarConexao() {
+        try {
+            entradaDeDados.close();
+            saidaDeDados.close();
+            cliente.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

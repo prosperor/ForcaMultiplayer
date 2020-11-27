@@ -2,28 +2,29 @@ package Servidor;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
-
 import Comum.Usuario;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Servidor {
-    private static ServerSocket servidor;
-    private static JogoForca game = new JogoForca();
+    private static final JogoForca game = new JogoForca();
+    private static final ArrayList<DataOutputStream> entradaDosClientes = new ArrayList<>();
+    private static final TaskThread envioPeriodico = new TaskThread();
     private static List<Usuario> user = new ArrayList<Usuario>();
     public static Usuario userAr[];
     public static int count = 0;
+
     public static void main(String[] args) { //Inicia o Servidor
         Scanner tecla = new Scanner(System.in);
         System.out.println("Qual será o Socket");
-        Integer socket = tecla.nextInt();
-        Integer ID = 0;
+        int socket = tecla.nextInt();
+        int ID = 0;
+
 
         try {
             //Inicio do servidor
-            servidor = new ServerSocket(socket);
+            ServerSocket servidor = new ServerSocket(socket);
             System.out.println("Servidor iniciado");
 
             while (true) {
@@ -42,6 +43,7 @@ public class Servidor {
                 user.toArray(userAr);
                 t.start();
             }
+
         }catch (IOException e){
             System.out.println(e.getMessage());
             System.out.println("Deu errado, reinicie e reconfigure seu socket");
@@ -61,23 +63,25 @@ public class Servidor {
     }
 
     public static String inputChute(char letra){
-        contar();
-        return game.chute(letra) + game.getLetrasUsadas(letra);
+        return game.chute(letra);
     }
 
-   /* private static void encerrarConexao(){
-        try {
-            entradaDeDados.close();
-            saidaDeDados.close();
-            cliente.close();
-            servidor.close();
-        }catch (IOException e){
-            System.out.println(e.getMessage());
+    public static void mapearEntradaCliente(DataOutputStream entrada){
+        entradaDosClientes.add(entrada);
+    }
+
+    public static void setAtivarTask(){
+        if (!envioPeriodico.isAlive()){
+            envioPeriodico.start();
         }
     }
 
-
-    */
+    public static void mandarAtualizacao() throws IOException{
+        for (DataOutputStream entradaCliente : entradaDosClientes){
+            entradaCliente.writeUTF(game.getWordChute() + ":" + game.getLetrasUsadas());
+            entradaCliente.flush();
+        }
+    }
 
     public static void contar(){
         count++;

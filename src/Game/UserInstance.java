@@ -3,7 +3,6 @@ package Game;
 import java.net.Socket;
 import java.util.Scanner;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.*;
 import java.net.*;
 
@@ -13,15 +12,13 @@ public class UserInstance {
     
     static DataInputStream inStream;
     static DataOutputStream outStream;
-    static BufferedReader br;
-
+   
     static int id, id1;
     static boolean x = false, y = false, z = true;
     static String nome, palavra, ip, stPalavra[];
     static Scanner sc1 = new Scanner(System.in);
-
     static private Socket client;
-    
+    static ThreadRecebimento escutador;
     
 
 
@@ -54,12 +51,11 @@ public class UserInstance {
         nome = sc1.nextLine();
         nome = sendMessage("cs:cadastrar:" + nome);
         System.out.println(nome);
-        
-
         System.out.println("conectado ao jogo - aguardando palavra");
         palavra = sendMessage("cs:palavra");
         System.out.println("palavra: " + palavra + '\n');
-       
+        escutador = new ThreadRecebimento(inStream);
+
         while(z){
             String otl = sc1.nextLine();
             String[] otlSt = otl.split(":");
@@ -119,7 +115,6 @@ public class UserInstance {
             */
             inStream=new DataInputStream(client.getInputStream());
             outStream=new DataOutputStream(client.getOutputStream());
-            br=new BufferedReader(new InputStreamReader(System.in));
         }catch(IOException ex){
             System.out.println("Não foi possivel se conectar");
         }
@@ -163,7 +158,6 @@ public class UserInstance {
             inStream.close();
             outStream.close();
             client.close();
-            br.close();
         }catch (IOException e){
             System.out.println(e.getMessage());
         }

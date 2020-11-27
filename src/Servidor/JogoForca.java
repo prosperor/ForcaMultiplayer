@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import Servidor.ManipulaTxt;
 
+import javax.xml.transform.sax.SAXResult;
+
 public class JogoForca {
     private String word;
     private String wordChute, letrasUsadas;
@@ -53,21 +55,22 @@ public class JogoForca {
     }
 
     public String getLetrasUsadas(char letra){
-        if(!letrasUsadas.contains(Character.toString(letra).toUpperCase())){
-            letrasUsadas = (letrasUsadas +  letra).toUpperCase().trim();
+        if (!letrasUsadas.contains(letra+"")) {
+            letrasUsadas = (letrasUsadas + letra).toUpperCase().trim();
             letrasUsadas = letrasUsadas.replace(" ", "");
 
             char[] st = letrasUsadas.toCharArray();
             Arrays.sort(st);
             letrasUsadas = "";
 
-            for(int i = 0; i < st.length; i++){
+            for (int i = 0; i < st.length; i++) {
                 letrasUsadas = letrasUsadas + st[i] + " ";
             }
         }
-        
-        
-        
+        return ":Letras usadas - " + letrasUsadas;
+    }
+
+    public String getLetrasUsadas(){
         return ":Letras usadas - " + letrasUsadas;
     }
 
