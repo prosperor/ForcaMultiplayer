@@ -34,6 +34,7 @@ nesse ponto o jogo ja estará pronto, basta se conectar.
 Agora, inicie o `.jar` referente a instancia de usuario, a primeira coisa que ele vai perguntar é se o jogo está hosteado na sua rede internet ou em outra, caso esteja na sua rede insira 1, do contrario insira 2, apos isso aperte enter.
 
 No caso 1, tudo que você tera que fazer para se conectar é inserir o valor do `Socket`, que foi colocado no servidor e consequentemente fornecido pelo mesmo.
+
 No caso 2, ou seja, se o servidor estiver hospedado em outra rede internet, o jogo ira requisitar o IP de onde o servidor está hospedado junto do valor do `Socket`, escreva separado por ":" como no exemplo a seguir: 
 `173.88.228.4:3322`
 
