@@ -20,13 +20,13 @@ claro, você deve acessar a pasta onde os `.jar` se encontram usando o comando c
 
 Primeiramente deve-se iniciar o `.jar` referente ao servidor, apos isso, o servidor ira perdir o `Socket`, caso você tenha configurado uma porta no seu roteador, utilize o numero dessa porta, se não basta colocar um numero, é recomendavel colocar um numero de 4 ou 5 digitos, uma vez que você apertar enter, o servidor irá retornar alguns dados, como no exemplo abaixo:
 
-`Servidor iniciado
+`Servidor iniciado`
 
-O IP é: 173.88.228.4
+`O IP é: 173.88.228.4`
 
-O Socket é 3322
+`O Socket é 3322`
 
-Esperando`
+`Esperando`
 
 nesse ponto o jogo ja estará pronto, basta se conectar.
 
