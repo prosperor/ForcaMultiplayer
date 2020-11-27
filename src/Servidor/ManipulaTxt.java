@@ -12,7 +12,7 @@ public class ManipulaTxt {
 
     public ManipulaTxt(){
         try {
-            FileReader dicio = new FileReader("src/Servidor/dicio.txt");
+            FileReader dicio = new FileReader("dicio.txt");
             BufferedReader lerArq = new BufferedReader(dicio);
             palavra = lerArq.readLine();
             while (palavra != null){
@@ -29,7 +29,7 @@ public class ManipulaTxt {
 
     public void setPalavra(){
         try {
-            palavra = (Files.readAllLines(Paths.get("src/Servidor/dicio.txt")).get((int)(Math.random() *  iLinhas))).toLowerCase();
+            palavra = (Files.readAllLines(Paths.get("dicio.txt")).get((int)(Math.random() *  iLinhas))).toLowerCase();
         }catch (IOException e){
             System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
         }
