@@ -51,7 +51,7 @@ public class UserInstance {
         System.out.println("conectado ao jogo - aguardando palavra");
         palavra = sendMessage("cs:palavra");
         System.out.println("palavra: " + palavra + '\n');
-        escutador = new ThreadRecebimento(inStream);
+        
 
         while(z){
             String otl = sc1.nextLine();
