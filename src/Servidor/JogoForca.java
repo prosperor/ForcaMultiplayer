@@ -72,4 +72,9 @@ public class JogoForca {
         return "Letras usadas - " + letrasUsadas;
     }
 
+    public String getLetrasUsadas(){
+        
+        return "Letras usadas - " + letrasUsadas;
+    }
+
 }

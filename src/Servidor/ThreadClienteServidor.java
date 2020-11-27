@@ -28,7 +28,7 @@ public class ThreadClienteServidor extends Thread {
     }
 
     public void run() {
-        String mensagemServidor = "", extra[];
+        String mensagemServidor = "", extra[] = new String[2], extra2[] = new String[2];
         String[] mensagemCliente;
         int opc = 0;
 
@@ -58,29 +58,38 @@ public class ThreadClienteServidor extends Thread {
                         }
                         break;
 
-                        case "ct":
-                        extra = mensagemServidor.split(":");
+                    case "ct":
+                        extra[0] = Servidor.getPalavraMascarada().trim();
+                        extra[1] = Servidor.getLetrasUsadas().trim();
 
                         mensagemServidor = Servidor.inputChute(mensagemCliente[1].charAt(0));
 
-                        if(!extra[0].equals(mensagemServidor.split(":")[0].trim())){
-                            if((!mensagemServidor.split(":")[0].contains("_"))){
-                                Servidor.atribuir5pts();
+                        extra2[0] = Servidor.getPalavraMascarada().trim();
+                        extra2[1] = Servidor.getLetrasUsadas().trim();
+                        System.out.println(extra[0].equals(extra2[0])) ;
+                        System.out.println(extra[0] + " , "+  extra2[0]);
+                        if(extra[0].equals(extra2[0])){
+                            if(extra[1].contains(Character.toString(extra2[1].charAt(0)))){
+                                System.out.println("-1pt");
+                                Servidor.userAr[ID-1].rmvPts(1);
                             }else{
-                                Servidor.userAr[ID-1].addPts(1);
+                                Servidor.userAr[ID-1].rmvPts(3);
                             }
-                        }else if(extra[1].contains(Character.toString(mensagemCliente[1].charAt(0)))){
-                            Servidor.userAr[ID-1].rmvPts(1);
+                        }else if((!mensagemServidor.split(":")[0].contains("_"))){
+                            System.out.println("5pt");
+                            //Servidor.atribuir5pts();
                         }else{
-                            Servidor.userAr[ID-1].rmvPts(3);
+                            System.out.println("1pt");
+                            Servidor.userAr[ID-1].addPts(1);
                         }
 
                         if(Servidor.isEnd()){
+                            Servidor.atribuir5pts();;
                             Servidor.restart();
                         }
                         mensagemServidor = mensagemServidor + ":" + getAllPts();
 
-                            System.out.println("Retornando resultado do chute: " + mensagemServidor);
+                            //System.out.println("Retornando resultado do chute: " + mensagemServidor);
 
                         saidaDeDados.writeUTF(mensagemServidor);
                         saidaDeDados.flush();

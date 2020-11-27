@@ -3,11 +3,11 @@ package Comum;
 public class PtsManipulator {
     
     public static int add(int _pts){
-        return _pts++;
+        return _pts + 1;
     }
 
     public static int rmv1(int _pts){
-        return _pts--;
+        return _pts - 1;
     }
 
     public static int rmv(int _pts){

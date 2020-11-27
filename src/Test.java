@@ -8,21 +8,11 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
-        Socket usuario = new Socket();
-        System.out.println("qual o endereço?");
-        Scanner teclas = new Scanner(System.in);
-        String end = teclas.nextLine();
-        try {
-            usuario = new Socket(end,3322);
-            PrintWriter out = new PrintWriter(usuario.getOutputStream());
-            BufferedReader in = new BufferedReader(new InputStreamReader(usuario.getInputStream()));
-        }catch (IOException e){
-            System.out.println(e.getMessage());
-            System.out.println("não deu certo");
+        String t1  = "_____";
+        String t2  = "____a";
+        if(!t1.equals(t2)){
+
+            System.out.println(t1.equals(t2));
         }
-
-
-
-
     }
 }

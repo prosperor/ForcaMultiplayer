@@ -62,12 +62,14 @@ public class Servidor {
     }
 
     public static synchronized String inputChute(char letra){
+        contar();
         return game.chute(letra);
     }
 
 
     public static void contar(){
         count++;
+        System.out.println(count);
         if(count == 7){
             count = 0;
             for(int i = 0; i<userAr.length; i++){
@@ -96,5 +98,9 @@ public class Servidor {
             ptsL = ptsL + userAr[i].getNome() + " - " + userAr[i].getPts() + " ";
         }
         return ptsL;
+    }
+
+    public static String getLetrasUsadas(){
+        return game.getLetrasUsadas();
     }
 }
