@@ -50,8 +50,7 @@ public class UserInstance {
         System.out.println(nome);
         System.out.println("conectado ao jogo - aguardando palavra");
         palavra = sendMessage("cs:palavra");
-        stPalavra = palavra.split(":");
-        System.out.println("Pontuação" + stPalavra[1] + '\n' + "palavra: " + stPalavra[0] + '\n');
+        System.out.println("palavra: " + palavra + '\n');
         escutador = new ThreadRecebimento(inStream);
 
         while(z){
